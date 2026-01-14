@@ -1,5 +1,6 @@
 package assignments.Ex3;
 
+
 /**
  * This class represents a 2D map as a "screen" or a raster matrix or maze over integers.
  * @author boaz.benmoshe
@@ -95,9 +96,23 @@ public class Map implements Map2D {
     public Pixel2D[] shortestPath(Pixel2D p1, Pixel2D p2, int obsColor) {
         Pixel2D[] ans = null;  // the result.
         /////// add your code below ///////
-
+        Map2D dists = allDistance(p1, obsColor);
+        int d = dists.getPixel(p2);
+        if (d == -1) return null; // No path
+        Pixel2D[] path = new Pixel2D[d + 1];
+        Pixel2D curr = p2; path[d] = p2;
+        while (d > 0) {
+            for (Index2D n : getNeighbours(curr)) {
+                if (dists.getPixel(n) == d - 1) {
+                    curr = n;
+                    path[--d] = n;
+                    break;
+                }
+            }
+        }
+        path[0] = p1;
+        return path;
         ///////////////////////////////////
-        return ans;
     }
     @Override
     /////// add your code below ///////
