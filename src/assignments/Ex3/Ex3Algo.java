@@ -150,7 +150,35 @@ public class Ex3Algo implements PacManAlgo{
         return safeMap;
     }
 
+    /**
+     * Move away from ghosts if trapped.
+     * @param pacPos Current pos
+     * @param ghosts List of ghosts
+     * @param board The board
+     * @return Safest direction to move
+     */
+    private int runToSafety(Pixel2D pacPos, GhostCL[] ghosts, Map board) {
+        Index2D[] neighbors = board.getNeighbours(pacPos);
+        int[] dirs = {Game.RIGHT, Game.LEFT, Game.UP, Game.DOWN};
+        int bestDir = Game.STAY;
+        double maxSafetyScore = -1;
 
+        for (int i = 0; i < neighbors.length; i++) {
+            Pixel2D n = neighbors[i];
+            if (board.getPixel(n) == WALL) continue;
+            double currentScore = 0;
+            for (GhostCL g : ghosts) {
+                if (g.getStatus() == 1 && g.remainTimeAsEatable(0) < 1.0) {
+                    currentScore += getDist(n, parsePos(g.getPos(0)), board);
+                }
+            }
+            if (currentScore > maxSafetyScore) {
+                maxSafetyScore = currentScore;
+                bestDir = dirs[i];
+            }
+        }
+        return bestDir;
+    }
 
     /**
      * Chooses the best food area to go to.
