@@ -32,32 +32,35 @@ public class Map implements Map2D {
     @Override
     public void init(int w, int h, int v) {
         /////// add your code below ///////
-
+        _map = new int[w][h];
+        for (int x = 0; x < w; x++) for (int y = 0; y < h; y++) _map[x][y] = v;
         ///////////////////////////////////
     }
     @Override
     public void init(int[][] arr) {
         /////// add your code below ///////
+        _map = new int[arr.length][arr[0].length];
+        for (int x = 0; x < arr.length; x++) System.arraycopy(arr[x], 0, _map[x], 0, arr[0].length);
 
         ///////////////////////////////////
     }
     @Override
     public int[][] getMap() {
-        int[][] ans = null;
-        /////// add your code below ///////
 
+        /////// add your code below ///////
+        return _map;
         ///////////////////////////////////
-        return ans;
+
     }
     @Override
     /////// add your code below ///////
-    public int getWidth() {return 0;}
+    public int getWidth() {return _map.length; }
     @Override
     /////// add your code below ///////
-    public int getHeight() {return 0;}
+    public int getHeight() {return _map[0].length;}
     @Override
     /////// add your code below ///////
-    public int getPixel(int x, int y) { return 0;}
+    public int getPixel(int x, int y) { return _map[x][y]; }
     @Override
     /////// add your code below ///////
     public int getPixel(Pixel2D p) {
