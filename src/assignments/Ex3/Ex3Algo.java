@@ -213,12 +213,15 @@ public class Ex3Algo implements PacManAlgo{
         Map2D dists = safeBoard.allDistance(pacPos, WALL);
         Pixel2D best = null;
         double maxScore = -1;
+
         for (int x = 0; x < realBoard.getWidth(); x++) {
             for (int y = 0; y < realBoard.getHeight(); y++) {
                 if (realBoard.getPixel(x, y) == FOOD) {
                     int d = dists.getPixel(x, y);
                     if (d <= 0) continue;
-                    double score = (double) countNearbyFood(x, y, realBoard) / (d * 0.8);
+
+                    int localFood = countNearbyFood(x, y, realBoard);
+                    double score = (double) localFood / (d * 0.8);
                     if (score > maxScore) { maxScore = score; best = new Index2D(x, y); }
                 }
             }
