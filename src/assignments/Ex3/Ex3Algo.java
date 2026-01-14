@@ -74,4 +74,19 @@ public class Ex3Algo implements PacManAlgo{
         dy = Math.min(dy, b.getHeight() - dy);
         return dx + dy;
     }
+
+    /**
+     * Finds the move command for a target tile.
+     * @param c Current tile
+     * @param n Next tile
+     * @param b The board
+     * @return Game direction
+     */
+    private int fixDirection(Pixel2D c, Pixel2D n, Map b) {
+        if (n.getX() == (c.getX() + 1) % b.getWidth()) return Game.RIGHT;
+        if (c.getX() == (n.getX() + 1) % b.getWidth()) return Game.LEFT;
+        if (n.getY() == (c.getY() + 1) % b.getHeight()) return Game.UP;
+        if (c.getY() == (n.getY() + 1) % b.getHeight()) return Game.DOWN;
+        return Game.STAY;
+    }
 }
