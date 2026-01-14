@@ -147,5 +147,24 @@ public class Ex3Algo implements PacManAlgo{
         return best;
     }
 
+    /**
+     * Finds the nearest edible ghost.
+     * @param pacPos My position
+     * @param ghosts All ghosts
+     * @param safeBoard Safe map
+     * @return Target ghost position or null
+     */
+    private Pixel2D getBestEdibleGhost(Pixel2D pacPos, GhostCL[] ghosts, Map safeBoard) {
+        Pixel2D best = null; int minD = Integer.MAX_VALUE;
+        for (GhostCL g : ghosts) {
+            if (g.getStatus() == 1 && g.remainTimeAsEatable(0) > 2.0) {
+                Pixel2D gPos = parsePos(g.getPos(0));
+                Pixel2D[] path = safeBoard.shortestPath(pacPos, gPos, WALL);
+                if (path != null && path.length < minD) { minD = path.length; best = gPos; }
+            }
+        }
+        return best;
+    }
+
 
 }
