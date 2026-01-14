@@ -50,7 +50,7 @@ public class Ex3Algo implements PacManAlgo{
                 }
             }
 
-            // Step 4: find the best area to eat food
+            // Step 4:find the best area to eat food
             // This looks for high density spots so we finish the game faster
             Pixel2D foodTarget = getSmartFoodTarget(pacPos, safeBoard, board);
             if (foodTarget != null) {
