@@ -1,11 +1,9 @@
 package assignments.Ex3;
 
-import exe.ex3.game.Game;
-import exe.ex3.game.GhostCL;
-import exe.ex3.game.PacManAlgo;
-import exe.ex3.game.PacmanGame;
+import exe.ex3.game.*;
 import java.awt.Color;
-import java.awt.*;
+
+
 
 /**
  * This is the major algorithmic class for Ex3 - the PacMan game:
@@ -25,30 +23,48 @@ public class Ex3Algo implements PacManAlgo{
     public String getInfo() {
         return null;
     }
-    @Override
+
     /**
      * This ia the main method - that you should design, implement and test.
      */
-    public int move(PacmanGame game) {
-        if(_count==0 || _count==300) {
-            int code = 0;
-            int[][] board = game.getGame(0);
-            printBoard(board);
-            int blue = Game.getIntColor(Color.BLUE, code);
-            int pink = Game.getIntColor(Color.PINK, code);
-            int black = Game.getIntColor(Color.BLACK, code);
-            int green = Game.getIntColor(Color.GREEN, code);
-            System.out.println("Blue=" + blue + ", Pink=" + pink + ", Black=" + black + ", Green=" + green);
-            String pos = game.getPos(code).toString();
-            System.out.println("Pacman coordinate: "+pos);
-            GhostCL[] ghosts = game.getGhosts(code);
-            printGhosts(ghosts);
-            int up = Game.UP, left = Game.LEFT, down = Game.DOWN, right = Game.RIGHT;
+        @Override
+        public int move(PacmanGame game) {
+            //  get the current board state and positions
+            Map board = new Map(game.getGame(0));
+            Pixel2D pacPos = parsePos(game.getPos(0));
+            GhostCL[] ghosts = game.getGhosts(0);
+
+            // step 1: check how much food (pellets) is left to set bravery level
+            int foodLeft = countFood(board);
+            int dynamicRadius = (foodLeft > 10) ? 3 : (foodLeft > 2 ? 2 : 1);
+
+            // step 2: a 'safe map' where ghosts are treated like walls
+            Map safeBoard = createSafeBoard(board, ghosts, pacPos, dynamicRadius);
+
+            // step 3: if ghosts are eatable try to eat them
+            Pixel2D ghostTarget = getBestEdibleGhost(pacPos, ghosts, safeBoard);
+            if (ghostTarget != null) {
+                Pixel2D[] path = safeBoard.shortestPath(pacPos, ghostTarget, WALL);
+                if (path != null && path.length > 1) {
+                    return fixDirection(pacPos, path[1], board);
+                }
+            }
+
+            // Step 4: find the best area to eat food
+            // This looks for high density spots so we finish the game faster
+            Pixel2D foodTarget = getSmartFoodTarget(pacPos, safeBoard, board);
+            if (foodTarget != null) {
+                Pixel2D[] path = safeBoard.shortestPath(pacPos, foodTarget, WALL);
+                if (path != null && path.length > 1) {
+                    return fixDirection(pacPos, path[1], board);
+                }
+            }
+
+            // Step 5: if no safe path to food exists,
+            // just move to the square that is furthest from danger.
+            return runToSafety(pacPos, ghosts, board);
         }
-        _count++;
-        int dir = randomDir();
-        return dir;
-    }
+
 
     /**
      * Converts a string "x,y" to a Pixel2D object.
