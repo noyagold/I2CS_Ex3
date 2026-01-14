@@ -68,11 +68,11 @@ public class Map implements Map2D {
     }
     @Override
     /////// add your code below ///////
-    public void setPixel(int x, int y, int v) {;}
+    public void setPixel(int x, int y, int v) {_map[x][y] = v; }
     @Override
     /////// add your code below ///////
     public void setPixel(Pixel2D p, int v) {
-        ;
+        setPixel(p.getX(), p.getY(), v);
     }
     @Override
     /**
