@@ -11,7 +11,7 @@ import java.util.Queue;
  */
 public class Map implements Map2D {
     private int[][] _map;
-    private boolean _cyclicFlag = true;
+
 
     /**
      * Constructs a w*h 2D raster map with an init value v.
@@ -24,7 +24,7 @@ public class Map implements Map2D {
      * Constructs a square map (size*size).
      * @param size
      */
-    public Map(int size) {this(size,size, 0);}
+
 
     /**
      * Constructs a map from a given 2D array.
@@ -68,7 +68,7 @@ public class Map implements Map2D {
     @Override
     /////// add your code below ///////
     public int getPixel(Pixel2D p) {
-        return this.getPixel(p.getX(),p.getY());
+        return getPixel(p.getX(), p.getY());
     }
     @Override
     /////// add your code below ///////
@@ -84,11 +84,11 @@ public class Map implements Map2D {
      * https://en.wikipedia.org/wiki/Flood_fill
      */
     public int fill(Pixel2D xy, int new_v) {
-        int ans=0;
-        /////// add your code below ///////
 
+        /////// add your code below ///////
+        return 0;
         ///////////////////////////////////
-        return ans;
+
     }
 
     @Override
@@ -97,7 +97,7 @@ public class Map implements Map2D {
      * https://en.wikipedia.org/wiki/Breadth-first_search
      */
     public Pixel2D[] shortestPath(Pixel2D p1, Pixel2D p2, int obsColor) {
-        Pixel2D[] ans = null;  // the result.
+
         /////// add your code below ///////
         Map2D dists = allDistance(p1, obsColor);
         int d = dists.getPixel(p2);

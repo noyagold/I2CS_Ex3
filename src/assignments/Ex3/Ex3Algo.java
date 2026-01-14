@@ -59,7 +59,7 @@ public class Ex3Algo implements PacManAlgo{
                 }
             }
 
-            // Step 5: if no safe path to food exists,
+            // 5. if no safe path to food exists,
             // just move to the square that is furthest from danger.
             return runToSafety(pacPos, ghosts, board);
         }
@@ -186,7 +186,6 @@ public class Ex3Algo implements PacManAlgo{
             for (Pixel2D neighborOfN : board.getNeighbours(n)) {
                 if (board.getPixel(neighborOfN) != WALL) exitCount++;
             }
-
 
             currentScore += exitCount * 2;
 
