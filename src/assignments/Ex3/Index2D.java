@@ -14,11 +14,14 @@ public class Index2D implements Pixel2D {
         return _y;
     }
     public double distance2D(Pixel2D t) {
-        double ans = 0;
         /////// add your code below ///////
+        if (t==null){
+            throw new RuntimeException();}
+        double distance = Math.sqrt(Math.pow(t.getX()-_x,2)+Math.pow(t.getY()-_y,2));
 
+        return distance;
         ///////////////////////////////////
-        return ans;
+
     }
     @Override
     public String toString() {
@@ -35,4 +38,6 @@ public class Index2D implements Pixel2D {
         ///////////////////////////////////
         return ans;
     }
+
+
 }
