@@ -102,4 +102,24 @@ public class Ex3Algo implements PacManAlgo{
                 if (board.getPixel(x, y) == FOOD) c++;
         return c;
     }
+
+    /**
+     * Checks how much food is in a small area around a point.
+     * @param x Center x
+     * @param y Center y
+     * @param board The board
+     * @return Number of nearby food
+     */
+    private int countNearbyFood(int x, int y, Map board) {
+        int count = 0;
+        // looking at a 5x5 area to find "hot spots"
+        for (int i = -2; i <= 2; i++) {
+            for (int j = -2; j <= 2; j++) {
+                int nx = (x + i + board.getWidth()) % board.getWidth();
+                int ny = (y + j + board.getHeight()) % board.getHeight();
+                if (board.getPixel(nx, ny) == FOOD) count++;
+            }
+        }
+        return count;
+    }
 }
