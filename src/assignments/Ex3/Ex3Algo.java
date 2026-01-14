@@ -186,7 +186,7 @@ public class Ex3Algo implements PacManAlgo{
             for (GhostCL g : ghosts) {
                 if (g.getStatus() == 1 && g.remainTimeAsEatable(0) < 1.0) {
                     int d = getDist(n, parsePos(g.getPos(0)), board);
-                    if (d <= 1) currentScore -= 1000;
+                    if (d <= 1) currentScore -= 1000; // SUeside
                     else currentScore += d;
                 }
             }
@@ -213,15 +213,12 @@ public class Ex3Algo implements PacManAlgo{
         Map2D dists = safeBoard.allDistance(pacPos, WALL);
         Pixel2D best = null;
         double maxScore = -1;
-
         for (int x = 0; x < realBoard.getWidth(); x++) {
             for (int y = 0; y < realBoard.getHeight(); y++) {
                 if (realBoard.getPixel(x, y) == FOOD) {
                     int d = dists.getPixel(x, y);
                     if (d <= 0) continue;
-
-                    int localFood = countNearbyFood(x, y, realBoard);
-                    double score = (double) localFood / (d * 0.8);
+                    double score = (double) countNearbyFood(x, y, realBoard) / (d * 0.8);
                     if (score > maxScore) { maxScore = score; best = new Index2D(x, y); }
                 }
             }
