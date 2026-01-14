@@ -89,4 +89,17 @@ public class Ex3Algo implements PacManAlgo{
         if (c.getY() == (n.getY() + 1) % b.getHeight()) return Game.DOWN;
         return Game.STAY;
     }
+
+    /**
+     * Counts how much food is left on board.
+     * @param board The current map
+     * @return Total food count
+     */
+    private int countFood(Map board) {
+        int c = 0;
+        for (int x = 0; x < board.getWidth(); x++)
+            for (int y = 0; y < board.getHeight(); y++)
+                if (board.getPixel(x, y) == FOOD) c++;
+        return c;
+    }
 }
