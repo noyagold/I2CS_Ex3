@@ -124,6 +124,35 @@ public class Ex3Algo implements PacManAlgo{
     }
 
     /**
+     * Creates a map where dangerous ghost zones are blocked.
+     * @param original The real board
+     * @param ghosts List of ghosts
+     * @param pacPos My position
+     * @param radius Buffer distance
+     * @return A "Safe" map with extra walls
+     */
+    private Map createSafeBoard(Map original, GhostCL[] ghosts, Pixel2D pacPos, int radius) {
+        Map safeMap = new Map(original.getMap());
+        for (GhostCL g : ghosts) {
+            // Only avoid if the ghost is dangerous and not eatable
+            if (g.getStatus() == 1 && g.remainTimeAsEatable(0) < 1.0) {
+                Pixel2D gPos = parsePos(g.getPos(0));
+                for (int x = 0; x < safeMap.getWidth(); x++) {
+                    for (int y = 0; y < safeMap.getHeight(); y++) {
+                        Pixel2D p = new Index2D(x, y);
+                        if (getDist(p, gPos, original) <= radius && !p.equals(pacPos)) {
+                            safeMap.setPixel(p, WALL);
+                        }
+                    }
+                }
+            }
+        }
+        return safeMap;
+    }
+
+
+
+    /**
      * Chooses the best food area to go to.
      * @param pacPos My position
      * @param safeBoard The safe map
