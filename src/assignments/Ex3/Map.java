@@ -1,6 +1,9 @@
 package assignments.Ex3;
 
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * This class represents a 2D map as a "screen" or a raster matrix or maze over integers.
  * @author boaz.benmoshe
@@ -117,13 +120,13 @@ public class Map implements Map2D {
     @Override
     /////// add your code below ///////
     public boolean isInside(Pixel2D p) {
-        return false;
+        return p!=null && p.getX()>=0 && p.getY()>=0 && p.getX()<getWidth() && p.getY()<getHeight();
     }
 
     @Override
     /////// add your code below ///////
     public boolean isCyclic() {
-        return false;
+        return true;
     }
     @Override
     /////// add your code below ///////
@@ -131,10 +134,40 @@ public class Map implements Map2D {
     @Override
     /////// add your code below ///////
     public Map2D allDistance(Pixel2D start, int obsColor) {
-        Map2D ans = null;  // the result.
-        /////// add your code below ///////
 
+        /////// add your code below ///////
+        Map res = new Map(getWidth(), getHeight(), -1);
+        Queue<Pixel2D> q = new LinkedList<>();
+        if(isInside(start)) {
+            q.add(start);
+            res.setPixel(start, 0);
+        }
+        while (!q.isEmpty()) {
+            Pixel2D curr = q.poll();
+            int d = res.getPixel(curr);
+            for (Index2D next : getNeighbours(curr)) {
+                if (getPixel(next) != obsColor && res.getPixel(next) == -1) {
+                    res.setPixel(next, d + 1);
+                    q.add(next);
+                }
+            }
+        }
+        return res;
         ///////////////////////////////////
-        return ans;
+
     }
+
+    public Index2D[] getNeighbours(Pixel2D p) {
+        int x = p.getX(), y = p.getY();
+        int w = getWidth(), h = getHeight();
+        // Uses double modulo to ensure positive indices for cyclic map
+        return new Index2D[]{
+                new Index2D((x + 1) % w, y),
+                new Index2D((x - 1 + w) % w, y),
+                new Index2D(x, (y + 1) % h),
+                new Index2D(x, (y - 1 + h) % h)
+        };
+    }
+
+
 }
