@@ -4,7 +4,7 @@ import exe.ex3.game.Game;
 import exe.ex3.game.GhostCL;
 import exe.ex3.game.PacManAlgo;
 import exe.ex3.game.PacmanGame;
-
+import java.awt.Color;
 import java.awt.*;
 
 /**
@@ -14,6 +14,8 @@ import java.awt.*;
  * Your task is to implement (here) your PacMan algorithm.
  */
 public class Ex3Algo implements PacManAlgo{
+    private final int WALL = Game.getIntColor(Color.BLUE, 0);
+    private final int FOOD = Game.getIntColor(Color.PINK, 0);
     private int _count;
     public Ex3Algo() {_count=0;}
     @Override
@@ -47,24 +49,16 @@ public class Ex3Algo implements PacManAlgo{
         int dir = randomDir();
         return dir;
     }
-    private static void printBoard(int[][] b) {
-        for(int y =0;y<b[0].length;y++){
-            for(int x =0;x<b.length;x++){
-                int v = b[x][y];
-                System.out.print(v+"\t");
-            }
-            System.out.println();
-        }
+
+    /**
+     * Converts a string "x,y" to a Pixel2D object.
+     * @param s The string from the game API
+     * @return A Pixel2D coordinate
+     */
+    private Pixel2D parsePos(String s) {
+        String[] p = s.split(",");
+        return new Index2D(Integer.parseInt(p[0]), Integer.parseInt(p[1]));
     }
-    private static void printGhosts(GhostCL[] gs) {
-        for(int i=0;i<gs.length;i++){
-            GhostCL g = gs[i];
-            System.out.println(i+") status: "+g.getStatus()+",  type: "+g.getType()+",  pos: "+g.getPos(0)+",  time: "+g.remainTimeAsEatable(0));
-        }
-    }
-    private static int randomDir() {
-        int[] dirs = {Game.UP, Game.LEFT, Game.DOWN, Game.RIGHT};
-        int ind = (int)(Math.random()*dirs.length);
-        return dirs[ind];
-    }
+
+
 }
