@@ -34,14 +34,14 @@ public class Ex3Algo implements PacManAlgo{
             Pixel2D pacPos = parsePos(game.getPos(0));
             GhostCL[] ghosts = game.getGhosts(0);
 
-            // step 1: check how much food (pellets) is left to set bravery level
+            // 1. check how much food is left to decide how safe to play
             int foodLeft = countFood(board);
-            int dynamicRadius = (foodLeft > 10) ? 3 : (foodLeft > 2 ? 2 : 1);
+            int dynamicRadius = (foodLeft > 10) ? 3 : 2;
 
-            // step 2: a 'safe map' where ghosts are treated like walls
+            // 2. create a map where ghosts and their surroundings are like walls (safe map)
             Map safeBoard = createSafeBoard(board, ghosts, pacPos, dynamicRadius);
 
-            // step 3: if ghosts are eatable try to eat them
+            // 3. if ghosts are eatable try to eat them
             Pixel2D ghostTarget = getBestEdibleGhost(pacPos, ghosts, safeBoard);
             if (ghostTarget != null) {
                 Pixel2D[] path = safeBoard.shortestPath(pacPos, ghostTarget, WALL);
@@ -50,8 +50,7 @@ public class Ex3Algo implements PacManAlgo{
                 }
             }
 
-            // Step 4:find the best area to eat food
-            // This looks for high density spots so we finish the game faster
+            // 4. try to find food in dense areas
             Pixel2D foodTarget = getSmartFoodTarget(pacPos, safeBoard, board);
             if (foodTarget != null) {
                 Pixel2D[] path = safeBoard.shortestPath(pacPos, foodTarget, WALL);
@@ -68,7 +67,7 @@ public class Ex3Algo implements PacManAlgo{
 
     /**
      * Converts a string "x,y" to a Pixel2D object.
-     * @param s The string from the game API
+     * @param s The string from the game server
      * @return A Pixel2D coordinate
      */
     private Pixel2D parsePos(String s) {
@@ -77,7 +76,7 @@ public class Ex3Algo implements PacManAlgo{
     }
 
     /**
-     * Calculates Manhattan distance with wrap-around support.
+     * Calculates distance with wrap-around support.
      * @param p1 Point A
      * @param p2 Point B
      * @param b The game board
@@ -183,23 +182,35 @@ public class Ex3Algo implements PacManAlgo{
             Pixel2D n = neighbors[i];
             if (board.getPixel(n) == WALL) continue;
             double currentScore = 0;
+            int exitCount = 0;
+            for (Pixel2D neighborOfN : board.getNeighbours(n)) {
+                if (board.getPixel(neighborOfN) != WALL) exitCount++;
+            }
+
+
+            currentScore += exitCount * 2;
+
             for (GhostCL g : ghosts) {
                 if (g.getStatus() == 1 && g.remainTimeAsEatable(0) < 1.0) {
                     int d = getDist(n, parsePos(g.getPos(0)), board);
-                    if (d <= 1) currentScore -= 1000; // SUeside
+                    if (d <= 1) currentScore -= 1000; // Death trap!
                     else currentScore += d;
                 }
             }
+
             if (currentScore > maxSafetyScore) {
                 maxSafetyScore = currentScore;
                 bestDir = dirs[i];
             }
         }
+
+        // if stuck, just move somewhere
         if (bestDir == Game.STAY) {
             for (int i = 0; i < neighbors.length; i++)
                 if (board.getPixel(neighbors[i]) != WALL) return dirs[i];
         }
         return bestDir;
+
     }
 
     /**
