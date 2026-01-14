@@ -60,5 +60,18 @@ public class Ex3Algo implements PacManAlgo{
         return new Index2D(Integer.parseInt(p[0]), Integer.parseInt(p[1]));
     }
 
-
+    /**
+     * Calculates Manhattan distance with wrap-around support.
+     * @param p1 Point A
+     * @param p2 Point B
+     * @param b The game board
+     * @return The shortest distance between points
+     */
+    private int getDist(Pixel2D p1, Pixel2D p2, Map b) {
+        int dx = Math.abs(p1.getX() - p2.getX());
+        int dy = Math.abs(p1.getY() - p2.getY());
+        dx = Math.min(dx, b.getWidth() - dx);//check if it's faster to go through the screen edge
+        dy = Math.min(dy, b.getHeight() - dy);
+        return dx + dy;
+    }
 }
