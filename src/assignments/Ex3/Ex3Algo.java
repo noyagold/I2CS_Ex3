@@ -185,13 +185,19 @@ public class Ex3Algo implements PacManAlgo{
             double currentScore = 0;
             for (GhostCL g : ghosts) {
                 if (g.getStatus() == 1 && g.remainTimeAsEatable(0) < 1.0) {
-                    currentScore += getDist(n, parsePos(g.getPos(0)), board);
+                    int d = getDist(n, parsePos(g.getPos(0)), board);
+                    if (d <= 1) currentScore -= 1000;
+                    else currentScore += d;
                 }
             }
             if (currentScore > maxSafetyScore) {
                 maxSafetyScore = currentScore;
                 bestDir = dirs[i];
             }
+        }
+        if (bestDir == Game.STAY) {
+            for (int i = 0; i < neighbors.length; i++)
+                if (board.getPixel(neighbors[i]) != WALL) return dirs[i];
         }
         return bestDir;
     }
