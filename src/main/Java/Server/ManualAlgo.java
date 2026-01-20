@@ -21,5 +21,5 @@ public class ManualAlgo implements PacManAlgo{
                 if (cmd == 'd') {ans = PacmanGame.RIGHT;}
             }
             return  ans;
-    }
+    } 
 }
