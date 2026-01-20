@@ -3,7 +3,7 @@ package Server;
 import exe.ex3.game.Game;
 
 /**
- * Interface for defining the logic (AI) of a Pacman player.
+ * Interface for defining the logic of a Pacman player.
  * Any class implementing this interface must provide a strategy for movement.
  */
 public interface PacManAlgo {
