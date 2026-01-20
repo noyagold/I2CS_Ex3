@@ -1,48 +1,66 @@
 I2CS_EX3 - PACMAN
-Brief
-This project is an implementation of a Pacman game that demonstrates AI logic and game server coordination. It is built as a Java application that utilizes a 2D grid (raster) system where Pacman must navigate a maze, collect food, and avoid ghosts. The project relies on foundational classes like Map and Index2D to handle spatial logic, such as finding the shortest path between points or calculating distances.
+Project Overview
+This project is a Java-based implementation of a Pacman game that focuses on Pathfinding. The goal is to create an intelligent Pacman that can navigate a maze, collect food efficiently, and avoid ghosts using logic rather than just moving randomly. It is built upon a 2D grid system where every position is a coordinate (x,y).
 
-Installation & Usage
-The project requires Java 23 to be installed on your computer.
+Installation & How to Play
+Requirement: Ensure Java 23 is installed on your machine.
 
-Download: Obtain the pacman.jar file from the repository.
-
-Run: Open your terminal and type: java -jar pacman.jar
+Run: Open a terminal in the project folder and run: java -jar pacman.jar.
 
 Controls:
 
-SPACE BAR: Toggles between Play and Pause.
+Space Bar: Start or Pause the game.
 
-Manual Movement: Use w (up), a (left), x (down), and d (right).
+'L' Key: Change the level (0 to 4), which increases the number of ghosts.
 
-Settings: Press L to change levels (0 to 4) and C to toggle "Cyclic Mode" (where you can wrap around the screen edges).
+'C' Key: Toggle Cyclic Mode (allows wrapping around edges).
 
-Project Structure (Core Logic)
-1. Pacman AI (Ex3Algo.java)
+Manual Control: Use W, A, X, D to move if AI is disabled.
 
-This class contains the "brain" of Pacman. It decides which direction to move in every frame.
+The AI Brain (Ex3Algo.java)
+The core of the project is the AI that decides where Pacman should go. Instead of "guessing," it follows a strict priority list to survive and win.
 
-The Strategy: The algorithm prioritizes staying alive. It first checks if any ghosts are "eatable" and close enough to hunt. If not, it looks for the closest food while maintaining a "safe distance" from dangerous ghosts.
+1. Decision Logic (move function)
 
-Safe Map: The code creates a "virtual" map where ghosts and the area around them are treated as walls, preventing Pacman from accidentally walking into danger.
+The AI analyzes the board in every frame and picks the best action:
 
-Food Search: It doesn't just go to the nearest food; it looks for "hot spots" where a lot of food is clustered together to get a higher score faster.
+Hunting: If a ghost is "blue" (edible), Pacman will chase it down for extra points.
 
-2. Map & Navigation (Map.java & Index2D.java)
+Smart Eating: If no ghosts are edible, it looks for the most "crowded" area of food to clear the map faster.
 
-These files handle the geometry of the game.
+Escape: If a dangerous ghost gets too close, Pacman drops everything and runs to the safest nearby tile.
 
-Shortest Path: Using an algorithm called BFS (Breadth-First Search), the map calculates the exact sequence of steps needed to get from Pacman to a target while avoiding blue walls.
+2. Safety Zones (createSafeBoard)
 
-Distances: The system can calculate the distance to every single point on the board at once, which helps in deciding which food is actually the "closest".
+The AI creates a "mental map" where it treats the area around ghosts as if they were walls. By doing this, the pathfinding logic automatically avoids those areas, keeping Pacman at a safe distance.
 
-Cyclic Logic: The map is "wrapped". Moving off the right edge will teleport Pacman to the left edge, and the AI is programmed to recognize these shortcuts.
+3. Emergency Reflexes (runToSafety)
 
-3. Game Management (Ex3Main.java & GameInfo.java)
+If Pacman is cornered, this function checks all four directions. It scores each direction based on how far it leads from ghosts and how many "escape routes" (openings) it has, choosing the one that offers the best chance of survival.
 
-Ex3Main: This is the entry point that starts the game loop. It listens for your keyboard presses and tells the game when to update.
+The Navigation System (Map.java)
+This is the "GPS" of the game. It handles the math of moving through the maze.
 
-GameInfo: This file holds your settings, such as your ID, the level you want to play, and whether the game should be in AI or Manual mode.
+1. Finding Paths (shortestPath & allDistance)
 
-Error Handling (game.err)
-The system includes a logging mechanism. If the game crashes or if Pacman cannot find any food, the error details are written to a file called game.err. This acts like a "black box" that helps developers understand what went wrong during a specific run.
+The map uses BFS (Breadth-First Search) to navigate.
+
+allDistance: This function starts from Pacman and spreads out like a ripple in water, marking how many steps it takes to reach every single point on the board.
+
+shortestPath: Once the distances are known, this function follows the numbers backward from the target to Pacman to find the quickest route.
+
+2. The Wrap-Around Effect (Cyclic Mode)
+
+The map is "Cyclic," meaning the edges are connected.
+
+getNeighbours: This function calculates the tiles next to Pacman. If he is at the far right edge, it tells the AI that the "right" neighbor is actually the far left edge of the screen.
+
+getDist: This calculates the distance by checking if it's shorter to walk across the screen or just wrap around the edge to reach the goal.
+
+
+https://github.com/user-attachments/assets/0a044e0f-e147-4065-8e7f-9d3b85e2a52c
+
+
+
+
+
