@@ -1,4 +1,4 @@
-package assignments.Ex3;
+package Server;
 import exe.ex3.game.PacManAlgo;
 /**
  * This class contains all the needed parameters for the Pacman game.
