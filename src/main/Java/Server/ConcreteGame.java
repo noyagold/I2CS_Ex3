@@ -71,9 +71,7 @@ public class ConcreteGame implements PacmanGame {
             String line = DEFAULT_MAP[y];
             for (int x = 0; x < w; x++) {
                 char c = line.charAt(x);
-                // Note: In arrays board[x][y], x is column, y is row (usually inverted in text)
-                // We will map map[y].charAt(x) to board[x][h-1-y] to keep (0,0) at bottom-left or top-left
-                // Let's stick to standard screen coords: (x,y) -> x is across, y is down.
+        
 
                 int targetY = y;
 
@@ -87,7 +85,7 @@ public class ConcreteGame implements PacmanGame {
                     this.playerY = targetY;
                 } else if (c == 'G') {
                     this.board[x][targetY] = FOOD; // Ghost sits on food
-                    // Create a ghost. Type 1 = Chaser
+                    // Create a ghost
                     SmartGhost g = new SmartGhost(1, x + "," + targetY);
                     this.ghosts.add(g);
                 } else {
