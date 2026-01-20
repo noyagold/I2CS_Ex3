@@ -65,7 +65,7 @@ https://github.com/user-attachments/assets/192ef9c7-75c3-48ec-bc81-d04482331592
 
 
 
-<img width="673" height="77" alt="צילום מסך 2026-01-14 ב-23 24 29" src="https://github.com/user-attachments/assets/6e743e47-9870-4c2d-a99b-c1ee67fadbea" />
+<img width="673" height="77" alt="צילום מסך 2026-01-14 ב-23 24 29" src="https://github.com/user-
 
 
 
