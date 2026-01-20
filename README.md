@@ -59,7 +59,12 @@ getDist: This calculates the distance by checking if it's shorter to walk across
 Error Handling & Logs
 The system includes a game.err file. If the logic fails to find a path or the game hits an unexpected state, it records the current coordinates and the board state. This allows for clear debugging to see exactly why a decision was made at any given time.
 
-https://github.com/user-attachments/assets/0a044e0f-e147-4065-8e7f-9d3b85e2a52c
+
+https://github.com/user-attachments/assets/192ef9c7-75c3-48ec-bc81-d04482331592
+
+
+
+
 <img width="673" height="77" alt="צילום מסך 2026-01-14 ב-23 24 29" src="https://github.com/user-attachments/assets/6e743e47-9870-4c2d-a99b-c1ee67fadbea" />
 
 
