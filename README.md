@@ -1,11 +1,10 @@
-I2CS_EX3 - PACMAN
-Project Overview
-This project is a Java-based implementation of a Pacman game that focuses on Pathfinding. The goal is to create an intelligent Pacman that can navigate a maze, collect food efficiently, and avoid ghosts using logic rather than just moving randomly. It is built upon a 2D grid system where every position is a coordinate (x,y).
+I2CS_EX3 - PACMAN Project Overview
+This project is a Java-based implementation of a Pacman game that focuses on Pathfinding and Logic-Based Decision Making. The goal is to create an intelligent Pacman that can navigate a maze, collect food efficiently, and avoid ghosts using structured logic. The game is built on a 2D grid system where every position is defined by (x,y) coordinates.
 
 Installation & How to Play
 Requirement: Ensure Java 23 is installed on your machine.
 
-Run: Open a terminal in the project folder and run: java -jar pacman.jar.
+Run: Open a terminal in the project folder and run: java -jar pacman.jar
 
 Controls:
 
@@ -15,31 +14,31 @@ Space Bar: Start or Pause the game.
 
 'C' Key: Toggle Cyclic Mode (allows wrapping around edges).
 
-Manual Control: Use W, A, X, D to move if AI is disabled.
+Manual Control: Use W, A, X, D to move if the autonomous mode is disabled.
 
-The AI Brain (Ex3Algo.java)
-The core of the project is the AI that decides where Pacman should go. Instead of "guessing," it follows a strict priority list to survive and win.
+The Strategic Controller (Ex3Algo.java)
+The core of the project is the controller that decides where Pacman should go. Instead of "guessing," it follows a strict priority list to survive and win.
 
-1. Decision Logic (move function)
+1. Decision Strategy (move function)
 
-The AI analyzes the board in every frame and picks the best action:
+The controller analyzes the board in every frame and picks the best action based on these rules:
 
 Hunting: If a ghost is "blue" (edible), Pacman will chase it down for extra points.
 
-Smart Eating: If no ghosts are edible, it looks for the most "crowded" area of food to clear the map faster.
+Targeted Eating: If no ghosts are edible, it looks for the most "crowded" area of food to clear the map faster.
 
 Escape: If a dangerous ghost gets too close, Pacman drops everything and runs to the safest nearby tile.
 
-2. Safety Zones (createSafeBoard)
+2. Danger Zones (createSafeBoard)
 
-The AI creates a "mental map" where it treats the area around ghosts as if they were walls. By doing this, the pathfinding logic automatically avoids those areas, keeping Pacman at a safe distance.
+The controller creates a "mental map" where it treats the area around ghosts as if they were walls. By doing this, the pathfinding logic automatically avoids those areas, keeping Pacman at a safe distance.
 
-3. Emergency Reflexes (runToSafety)
+3. Escape Maneuvers (runToSafety)
 
 If Pacman is cornered, this function checks all four directions. It scores each direction based on how far it leads from ghosts and how many "escape routes" (openings) it has, choosing the one that offers the best chance of survival.
 
 The Navigation System (Map.java)
-This is the "GPS" of the game. It handles the math of moving through the maze.
+This is the "GPS" of the game. It handles the logic of moving through the maze using graph-search techniques.
 
 1. Finding Paths (shortestPath & allDistance)
 
@@ -53,12 +52,15 @@ shortestPath: Once the distances are known, this function follows the numbers ba
 
 The map is "Cyclic," meaning the edges are connected.
 
-getNeighbours: This function calculates the tiles next to Pacman. If he is at the far right edge, it tells the AI that the "right" neighbor is actually the far left edge of the screen.
+getNeighbours: This function calculates the tiles next to Pacman. If he is at the far right edge, it tells the controller that the "right" neighbor is actually the far left edge of the screen.
 
 getDist: This calculates the distance by checking if it's shorter to walk across the screen or just wrap around the edge to reach the goal.
 
+Error Handling & Logs
+The system includes a game.err file. If the logic fails to find a path or the game hits an unexpected state, it records the current coordinates and the board state. This allows for clear debugging to see exactly why a decision was made at any given time.
 
 https://github.com/user-attachments/assets/0a044e0f-e147-4065-8e7f-9d3b85e2a52c
+<img width="673" height="77" alt="צילום מסך 2026-01-14 ב-23 24 29" src="https://github.com/user-attachments/assets/6e743e47-9870-4c2d-a99b-c1ee67fadbea" />
 
 
 
