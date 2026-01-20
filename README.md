@@ -62,8 +62,35 @@ The system includes a game.err file. If the logic fails to find a path or the ga
 
 https://github.com/user-attachments/assets/192ef9c7-75c3-48ec-bc81-d04482331592
 
+🎨 Server - Implementation of Visual & Temporal Features(The Artistic Bonuses)
 
 
+1. Color-Space Mapping (The Aesthetic Basis)
+
+The numerical grid was mapped to a specific color palette to establish visual hierarchy and immediate state recognition:
+
+Blue Hex-Code Mapping: Applied to all wall segments (ID: 1). This defines the static "boundaries" of the subspace.
+
+Pink/Red Vector Styling: Applied to the GhostCL entities. This distinguishes enemy vectors from the background, allowing for immediate pathing recognition.
+
+Yellow Rendering: Assigned to the PacmanAgent to signify the primary controlled entity.
+
+2. Temporal Logic (The Game Clock)
+
+Instead of a static snapshot, a Time-State Manager was integrated.
+
+The Clock: A sequential counter that tracks the duration of the session. Technically, this adds a temporal dimension to the game state, allowing for time-based scoring and movement speed calculations.
+
+3. Termination Logic (The Game-Over Trigger)
+
+The "Game Over" feature was implemented as a logical interrupt:
+
+Collision Detection: When the coordinate vector of Pacman p(x,y) equals the coordinate vector of a Ghost g(x,y), the system triggers a state transition.
+
+Signal Output: The engine stops all movement calculations and renders a "Game Over" overlay, resetting the active session parameters.
+
+
+<img width="585" height="596" alt="צילום מסך 2026-01-20 ב-21 58 08" src="https://github.com/user-attachments/assets/fc59de25-bdf0-4cf8-b932-283b2f2508a0" />
 
 
 
