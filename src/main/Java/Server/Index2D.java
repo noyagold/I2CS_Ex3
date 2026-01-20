@@ -23,7 +23,7 @@ public class Index2D implements Pixel2D {
         ///////////////////////////////////
 
     }
-    @Override
+    @Override 
     public String toString() {
         return getX()+","+getY();
     }
