@@ -1,4 +1,4 @@
-package assignments.Ex3;
+package Server;
 
 public class Index2D implements Pixel2D {
     private int _x, _y;
