@@ -3,7 +3,7 @@ package assignments.Ex3;
 /**
  * This interface represents an integer based coordinate of a 2D raster (aka a 2D matrix).
  */
-public interface Pixel2D {
+public interface  Pixel2D {
     /**
      * @return the X coordinate (integer) of the pixel.
      */

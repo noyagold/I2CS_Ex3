@@ -11,7 +11,7 @@ package assignments.Ex3;
  * 5. fill a connected component with a new color
  *
  * If this map is cyclic:
- * 1. the pixel to the left of (0,i) is (getWidth()-1,i).
+ *  1. the pixel to the left of (0,i) is (getWidth()-1,i).
  * 2. the pixel to the right of (getWidth()-1,i) is (0,i).
  * 3. the pixel above (j,getHeight()-1) is (j,0).
  * 4. the pixel below (j,0) is (j,getHeight()-1).
