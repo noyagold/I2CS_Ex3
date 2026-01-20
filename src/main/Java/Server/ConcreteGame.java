@@ -4,7 +4,7 @@ import exe.ex3.game.GhostCL;
 import exe.ex3.game.PacmanGame;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Random;
+
 
 public class ConcreteGame implements PacmanGame {
 
@@ -14,7 +14,7 @@ public class ConcreteGame implements PacmanGame {
 
     private int status;
     private int[][] board;
-    private ArrayList<SmartGhost> ghosts; // Using local SmartGhost or generic list
+    private ArrayList<SmartGhost> ghosts; 
     private int playerX, playerY;
     private int score;
     private boolean isCyclicMap;
@@ -24,7 +24,7 @@ public class ConcreteGame implements PacmanGame {
     private final int FOOD = Color.PINK.getRGB();
     private final int EMPTY = Color.BLACK.getRGB();
 
-    // A hardcoded 20x20 Level
+    //  20x20 Level
     private final String[] DEFAULT_MAP = {
             "####################",
             "#P........#........#",
@@ -111,7 +111,7 @@ public class ConcreteGame implements PacmanGame {
         // 1. Move Pacman
         movePacman(direction);
 
-        // 2. Check Collision (Did we walk into a ghost?)
+        // 2. Check Collision 
         if (checkCollision()) {
             this.status = STATUS_DONE;
             return "You Died";
@@ -120,7 +120,7 @@ public class ConcreteGame implements PacmanGame {
         // 3. Move Ghosts
         moveGhosts();
 
-        // 4. Check Collision (Did a ghost walk into us?)
+        // 4. Check Collision 
         if (checkCollision()) {
             this.status = STATUS_DONE;
             return "You Died";
@@ -136,7 +136,7 @@ public class ConcreteGame implements PacmanGame {
         switch (direction) {
             case 1: nextX++; break; // Right
             case 2: nextX--; break; // Left
-            case 3: nextY--; break; // Up (y decreases in array index usually, but depends on rendering)
+            case 3: nextY--; break; // Up 
             case 4: nextY++; break; // Down
         }
 
@@ -162,7 +162,7 @@ public class ConcreteGame implements PacmanGame {
             int gx = Integer.parseInt(pos[0]);
             int gy = Integer.parseInt(pos[1]);
 
-            // Simple AI: Move towards player
+            // Move towards player
             int bestDist = Integer.MAX_VALUE;
             int bestX = gx;
             int bestY = gy;
